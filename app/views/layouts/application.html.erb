@@ -42,7 +42,8 @@
           <div class="lg:flex-grow"></div>
           <div class="w-full block lg:flex lg:flex-row lg:flex-1 mt-2 lg:mt-0 text-center lg:text-left lg:justify-end items-center">
             <% if user_signed_in? %>
-              <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"btn btn-default mb-2 lg:mr-2 lg:mb-0 block" %>
+              <%= link_to 'New Project', new_project_path, class: "btn btn-white mb-2 lg:mb-0 block" %>
+              <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"btn btn-default mb-2 lg:ml-2 lg:mb-0 block" %>
             <% else %>
 
               <%= link_to "Login", new_user_session_path, class:"btn btn-default mb-2 lg:mr-2 lg:mb-0 block" %>

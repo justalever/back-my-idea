@@ -1,6 +1,6 @@
 /* Forms */
 .input {
-  @apply appearance-none block w-full bg-blue-100 text-gray-800 rounded py-3 px-4 leading-tight;
+  @apply appearance-none block w-full bg-white text-gray-800 rounded py-3 px-4 leading-tight;
 }
 
 .input:focus {
@@ -8,12 +8,12 @@
 }
 
 .label {
-  @apply block text-blue-100 text-sm font-bold mb-2;
+  @apply block text-white font-bold mb-2;
 }
 
 .select {
-  @apply appearance-none py-3 px-4 pr-8 block w-full bg-blue-100 text-gray-800
-   rounded leading-tight;
+  @apply appearance-none py-3 px-4 pr-8 block w-full bg-white text-gray-800
+   rounded leading-tight border-2 border-transparent;
   -webkit-appearance: none;
 }
 

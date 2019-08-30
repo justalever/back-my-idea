@@ -13,6 +13,15 @@
   }
 }
 
+.btn-white {
+  @apply bg-white text-blue-800;
+
+  &:hover,
+  &focus {
+    @apply bg-gray-300;
+  }
+}
+
 .link {
   @apply no-underline text-white;
 

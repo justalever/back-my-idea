@@ -1,31 +1,19 @@
-<p id="notice"><%= notice %></p>
+<div class="flex flex-wrap items-center justify-between">
+  <% @projects.each do |project| %>
+    <div class="border-2 border-blue-700 rounded-lg p-6 lg:w-1/4 w-full relative">
+      <h3 class="font-bold text-2xl mb-2"><%= project.title %></h3>
+      <div class="my-1"><%= truncate(strip_tags(project.description.to_s), length: 140) %></div>
+      <p>Donation goal: <%= project.donation_goal %></p>
+      <p class="text-sm italic opacity-75">Created by: <%= project.user.name %> </p>
+      <%= link_to "View project", project, class: "btn btn-default inline-block text-center my-2" %>
+      <% if author_of(project) %>
+      <div class="absolute top-0 right-0 mt-2 mr-2">
+        <%= link_to edit_project_path(project) do %>
+          <svg class="fill-current text-white opacity-75 w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><title>edit</title><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
+        <% end %>
+      </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
 
-<h1>Projects</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Donation goal</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @projects.each do |project| %>
-      <tr>
-        <td><%= project.title %></td>
-        <td><%= project.donation_goal %></td>
-        <td><%= project.user_id %></td>
-        <td><%= link_to 'Show', project %></td>
-        <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Project', new_project_path %>
