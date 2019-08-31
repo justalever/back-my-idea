@@ -1,6 +1,7 @@
 <div class="flex flex-wrap items-center justify-between">
   <% @projects.each do |project| %>
     <div class="border-2 border-blue-700 rounded-lg p-6 lg:w-1/4 w-full relative">
+      <%= image_tag project.thumbnail.variant(resize_to_limit: [600, 400]) %>
       <h3 class="font-bold text-2xl mb-2"><%= project.title %></h3>
       <div class="my-1"><%= truncate(strip_tags(project.description.to_s), length: 140) %></div>
       <p>Donation goal: <%= project.donation_goal %></p>
