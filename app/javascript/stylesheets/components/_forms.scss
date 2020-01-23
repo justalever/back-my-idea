@@ -1,7 +1,12 @@
 /* Forms */
 .input {
   @apply appearance-none block w-full bg-white text-gray-800 rounded py-3 px-4 leading-tight;
+
+  &.input-with-border {
+    @apply border;
+  }
 }
+
 
 .input:focus {
   @apply outline-none bg-white;

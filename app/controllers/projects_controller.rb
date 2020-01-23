@@ -10,14 +10,14 @@ class ProjectsController < ApplicationController
   end
 
   def new
-    @project = current_user.projects.new
+    @project = Project.new
   end
 
   def edit
   end
 
   def create
-    @project = current_user.projects.new(project_params)
+    @project = Project.new(project_params)
     @project.user_id = current_user.id
 
     respond_to do |format|
