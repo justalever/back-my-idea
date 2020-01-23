@@ -1,44 +1,51 @@
 <div class="container relative p-6 mx-auto text-gray-900 bg-white rounded-lg lg:p-10">
-
-  <div class="flex flex-wrap items-start justify-between">
-
-    <div class="w-full lg:w-3/5">
-      <%= image_tag @project.thumbnail, class: "rounded mb-6" %>
-
-      <div class="my-6">
-        <p class="text-sm font-semibold text-gray-500 uppercase">Description</p>
-        <%= @project.description %>
-      </div>
-
-      <%= render "comments/comments", commentable: @project  %>
-      <%= render "comments/form", commentable: @project %>
-    </div>
-
-    <div class="w-full lg:w-2/5 lg:pl-10">
-      <div class="mb-4">
-        <h1 class="text-3xl font-bold text-gray-800"><%= @project.title %></h1>
-        <p class="text-sm italic text-gray-500">Created by <%= @project.user.name ||= @project.user.username %></p>
-      </div>
-
-      <div class="mt-4">
-        <p class="m-0 text-xl font-semibold leading-none"><%# @project.pledged_amount %>1000</p>
-        <p class="text-sm text-gray-500">pledged of <%= @project.donation_goal %></p>
-      </div>
-
-      <div class="mt-4">
-        <p class="m-0 text-xl font-semibold leading-none">200</p>
-        <p class="text-sm text-gray-500">backers</p>
+  <div class="flex flex-wrap items-center justify-between w-full pb-4 mb-8 border-b-2 border-gray-200">
+    <div class="flex flex-wrap items-start justify-between w-full pb-4 mb-4 border-b-2 border-gray-200">
+      <div class="flex-1">
+        <h1 class="text-3xl font-bold leading-none text-gray-800"><%= @project.title %></h1>
+        <p class="text-sm italic text-gray-500">Created by <%= @project.user.name ||=
+      @project.user.username %></p>
       </div>
 
       <% unless author_of(@project) %>
-        <%= link_to "Back this idea", "#", class: "btn btn-default btn-lg btn-expanded my-4" %>
-      <% end %>
-
-      <% if admin? || author_of(@project) %>
-        <div class="absolute top-0 right-0 mt-4 mr-4">
-          <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-sm btn-outlined btn-default" %>
-        </div>
+        <%= link_to "Back this idea", "#", class: "btn btn-default btn-lg lg:w-auto w-full lg:text-left text-center" %>
       <% end %>
     </div>
+
+    <div class="w-full mb-4 lg:w-1/5 lg:mb-0">
+      <p class="m-0 text-xl font-semibold leading-none"><%= number_to_currency(@project.current_donation_amount) %></p>
+      <p class="text-sm text-gray-500">pledged of <%= number_to_currency(@project.donation_goal) %></p>
+    </div>
+
+    <div class="w-full mb-4 lg:w-1/5 lg:mb-0">
+      <p class="m-0 text-xl font-semibold leading-none">200</p>
+      <p class="text-sm text-gray-500">backers</p>
+    </div>
+
+    <div class="w-full mb-4 lg:w-1/5 lg:mb-0">
+      <p class="m-0 text-xl font-semibold leading-none">20</p>
+      <p class="text-sm text-gray-500">days to go</p>
+    </div>
   </div>
+
+  <div class="flex flex-wrap items-start justify-between mb-6">
+    <div class="w-full lg:w-3/5">
+      <%= image_tag @project.thumbnail, class: "rounded" %>
+    </div>
+    <div class="w-full mt-6 lg:pl-10 lg:w-2/5 lg:mt-0">
+      <p class="text-sm font-semibold text-gray-500 uppercase">Description</p>
+      <%= @project.description %>
+    </div>
+  </div>
+
+  <div class="w-full lg:w-3/5">
+    <%= render "comments/comments", commentable: @project  %>
+    <%= render "comments/form", commentable: @project %>
+  </div>
+
+  <% if admin? || author_of(@project) %>
+    <div class="absolute top-0 right-0 mt-4 mr-4">
+      <%= link_to 'Edit', edit_project_path(@project), class: "btn btn-sm btn-outlined btn-default" %>
+    </div>
+  <% end %>
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_30_213122) do
+ActiveRecord::Schema.define(version: 2020_01_23_222554) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -43,6 +43,16 @@ ActiveRecord::Schema.define(version: 2019_08_30_213122) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.string "commentable_type"
+    t.integer "commentable_id"
+    t.integer "user_id", null: false
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -56,10 +66,13 @@ ActiveRecord::Schema.define(version: 2019_08_30_213122) do
 
   create_table "projects", force: :cascade do |t|
     t.string "title"
-    t.string "donation_goal"
+    t.decimal "donation_goal"
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "current_donation_amount", default: 0
+    t.datetime "expires_at", default: "2020-02-22 22:51:44"
+    t.string "status", default: "active"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -79,5 +92,6 @@ ActiveRecord::Schema.define(version: 2019_08_30_213122) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "comments", "users"
   add_foreign_key "projects", "users"
 end
