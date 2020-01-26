@@ -9,6 +9,6 @@ Rails.application.routes.draw do
     resources :comments, module: :projects
   end
 
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: "omniauth_callbacks" }
   root to: 'projects#index'
 end
