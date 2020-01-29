@@ -38,16 +38,15 @@
         </div>
       </div>
     <% end %>
+    <div class="my-6">
+      <%= render "comments/comments", commentable: project  %>
+      <p>Comments are closed for inactive projects</p>
+    </div>
     </div>
     <div class="w-full mt-6 lg:pl-10 lg:w-2/5 lg:mt-0">
       <p class="text-sm font-semibold text-gray-500 uppercase">Description</p>
       <%= project.description %>
     </div>
-  </div>
-
-  <div class="w-full lg:w-3/5">
-    <%= render "comments/comments", commentable: project  %>
-    <p>Comments are closed for inactive projects</p>
   </div>
 
   <% if admin? || author_of(project) %>
