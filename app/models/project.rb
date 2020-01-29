@@ -20,6 +20,4 @@ class Project < ApplicationRecord
   def inactive
     status == "inactive"
   end
-
-
 end

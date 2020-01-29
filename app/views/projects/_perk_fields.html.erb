@@ -1,0 +1,27 @@
+<div class="p-6 mb-4 border rounded nested-fields">
+
+  <%= form.hidden_field :_destroy %>
+
+  <div class="mb-6">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: "input" %>
+  </div>
+
+  <div class="mb-6">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: "input" %>
+  </div>
+
+  <div class="mb-6">
+    <%= form.label :amount %>
+    <%= form.text_field :amount, placeholder: "0.00", class: "input" %>
+  </div>
+
+  <div class="mb-6">
+    <%= form.label :quantity %>
+    <%= form.text_field :quantity, placeholder: "10", class: "input" %>
+  </div>
+
+  <%= link_to "Remove", "#", data: { action: "click->nested-form#remove_association" }, class: "text-white underline text-sm" %>
+
+</div>
