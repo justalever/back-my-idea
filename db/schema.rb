@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_26_202322) do
+ActiveRecord::Schema.define(version: 2020_01_29_194426) do
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -64,14 +64,15 @@ ActiveRecord::Schema.define(version: 2020_01_26_202322) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
-  create_table "merchants", force: :cascade do |t|
+  create_table "perks", force: :cascade do |t|
     t.string "title"
-    t.string "description"
-    t.integer "user_id", null: false
-    t.decimal "fee"
+    t.decimal "amount", precision: 8, scale: 2, default: "0.0"
+    t.text "description"
+    t.integer "quantity"
+    t.integer "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_merchants_on_user_id"
+    t.index ["project_id"], name: "index_perks_on_project_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -107,6 +108,6 @@ ActiveRecord::Schema.define(version: 2020_01_26_202322) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
-  add_foreign_key "merchants", "users"
+  add_foreign_key "perks", "projects"
   add_foreign_key "projects", "users"
 end
