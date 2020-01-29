@@ -7,10 +7,12 @@
       project.user.username %></p>
       </div>
 
-      <% if !author_of(project) %>
-        <%= link_to "Back this idea", "#", class: "btn btn-default btn-lg lg:w-auto w-full lg:text-left text-center" %>
-      <% elsif author_of(project) %>
-       <%# If it's you're project don't display the button at all %>
+      <% if user_signed_in? %>
+        <% if !author_of(project) %>
+          <%= link_to "Back this idea", "#", class: "btn btn-default btn-lg lg:w-auto w-full lg:text-left text-center" %>
+        <% else %>
+          <%= link_to "Back this idea", "#", class: "btn btn-default btn-lg lg:w-auto w-full lg:text-left text-center" %>
+        <% end %>
       <% else %>
         <%= link_to "Back this idea", new_user_session_path, class:"btn btn-default btn-lg lg:w-auto w-full lg:text-left text-center" %>
       <% end %>
