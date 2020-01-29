@@ -1,0 +1,15 @@
+<%= form_with model: current_user, url: subscription_url, method: :post, html: { id: "payment-form" }, data: { stripe_key: project.user.publishable_key }  do |form| %>
+  <div>
+    <label for="card-element">
+      Credit or debit card
+    </label>
+    <div id="card-element">
+      <!-- A Stripe Element will be inserted here. -->
+    </div>
+
+    <!-- Used to display Element errors. -->
+    <div id="card-errors" role="alert"></div>
+  </div>
+
+  <button>Submit Payment</button>
+<% end %>

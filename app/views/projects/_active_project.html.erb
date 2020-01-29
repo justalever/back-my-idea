@@ -56,7 +56,7 @@
           <div class="py-2 text-gray-700">
             <%= simple_format perk.description %>
           </div>
-          <%= link_to "Back this idea for #{number_to_currency(perk.amount)} /mo", "#", class: "btn btn-default btn-expanded" %>
+          <%= link_to "Back this idea for #{number_to_currency(perk.amount)} /mo", new_subscription_path(amount: perk.amount, project: project), class: "btn btn-default btn-expanded" %>
         </div>
       <% end %>
     </div>
