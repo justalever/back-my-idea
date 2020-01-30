@@ -11,12 +11,12 @@
     </div>
 
     <div class="w-full mb-4 lg:w-1/5 lg:mb-0">
-      <p class="m-0 text-xl font-semibold leading-none"><%= number_to_currency(project.current_donation_amount) %></p>
-      <p class="text-sm text-gray-500">pledged of <%= number_to_currency(project.donation_goal) %></p>
+      <p class="m-0 text-xl font-semibold leading-none"><%= number_to_currency(project.current_donation_amount) %> /mo</p>
+      <p class="text-sm text-gray-500">pledged of <%= number_to_currency(project.donation_goal) %> /mo</p>
     </div>
 
     <div class="w-full mb-4 lg:w-1/5 lg:mb-0">
-      <p class="m-0 text-xl font-semibold leading-none">200</p>
+      <p class="m-0 text-xl font-semibold leading-none"><%= project.backings_count %></p>
       <p class="text-sm text-gray-500">backers</p>
     </div>
 

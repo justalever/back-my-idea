@@ -10,13 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_30_203235) do
+ActiveRecord::Schema.define(version: 2020_01_30_225723) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
     t.string "record_type", null: false
-    t.integer "record_id", null: false
+    t.bigint "record_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
@@ -25,8 +28,8 @@ ActiveRecord::Schema.define(version: 2020_01_30_203235) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -46,7 +49,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_203235) do
   create_table "comments", force: :cascade do |t|
     t.string "commentable_type"
     t.integer "commentable_id"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -69,7 +72,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_203235) do
     t.decimal "amount", precision: 8, scale: 2, default: "0.0"
     t.text "description"
     t.integer "quantity"
-    t.integer "project_id", null: false
+    t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["project_id"], name: "index_perks_on_project_id"
@@ -78,12 +81,13 @@ ActiveRecord::Schema.define(version: 2020_01_30_203235) do
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.decimal "donation_goal"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "current_donation_amount", default: 0
-    t.datetime "expires_at", default: "2020-02-29 21:10:52"
+    t.datetime "expires_at", default: "2020-02-29 22:59:39"
     t.string "status", default: "active"
+    t.integer "backings_count", default: 0
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
@@ -108,6 +112,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_203235) do
     t.string "card_exp_month"
     t.string "card_exp_year"
     t.string "card_type"
+    t.text "perk_subscriptions"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -16,6 +16,7 @@ class SubscriptionsController < ApplicationController
     plan = Stripe::Plan.retrieve(plan_id)
     token = params[:stripeToken]
 
+
     customer = if current_user.stripe_id?
                 Stripe::Customer.retrieve(current_user.stripe_id)
               else
@@ -48,6 +49,13 @@ class SubscriptionsController < ApplicationController
 
     current_user.update(options)
 
+    # Update project attributes
+    project_updates = {
+      backings_count: @project.backings_count.next,
+      current_donation_amount: @project.current_donation_amount + (plan.amount/100).to_i,
+    }
+    @project.update(project_updates)
+
     redirect_to root_path, notice: "Your subscription was setup successfully!"
   end
 
@@ -56,7 +64,6 @@ class SubscriptionsController < ApplicationController
     customer = Stripe::Customer.retrieve(current_user.stripe_id)
     customer.subscriptions.retrieve(subscription_to_remove).delete
     current_user.subscribed = false
-
     redirect_to root_path, notice: "Your subscription has been cancelled."
   end
 end
