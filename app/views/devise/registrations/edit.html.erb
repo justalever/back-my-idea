@@ -65,9 +65,24 @@
   <div class="p-6 mt-10 text-gray-900 bg-white rounded shadow-lg">
     <% unless resource.can_receive_payments? %>
       <h4 class="mb-6 text-xl font-semibold leading-none text-gray-900">You wont be able to sell items until you register with Stripe!</h4>
-      <%= stripe_button %>
+      <%= stripe_connect_button %>
     <% else %>
       <h4 class="mb-6 text-xl font-semibold leading-none text-gray-900">Successfully connected to Stripe 👍 ✅</h4>
     <% end %>
   </div>
+
+  <%  customer = Stripe::Customer.retrieve(current_user.stripe_id) %>
+  <% if resource.subscribed? && customer.subscriptions.any? %>
+    <div class="p-6 mt-10 text-gray-900 bg-white rounded shadow-lg">
+      <h4 class="font-bold text-gray-900">Active subscriptions</h4>
+      <ul>
+        <% customer.subscriptions.list.data.each do |sub| %>
+        <li class="flex items-center justify-between py-4 border-b">
+          <div><%= sub.plan.nickname %></div>
+          <%= link_to "Cancel Subscription", subscription_path(id: sub.id), method: :delete, data: { confirm: "Are you sure?" } %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+   <% end %>
 </div>

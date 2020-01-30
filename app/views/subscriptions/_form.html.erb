@@ -1,15 +1,19 @@
-<%= form_with model: current_user, url: subscription_url, method: :post, html: { id: "payment-form" }, data: { stripe_key: project.user.publishable_key }  do |form| %>
+<%= form_with model: current_user, local: true, url: subscription_url, method: :post, html: { id: "payment-form", class: "stripe-form" }, data: { stripe_key: project.user.publishable_key }  do |form| %>
   <div>
-    <label for="card-element">
+    <label for="card-element" class="label">
       Credit or debit card
     </label>
+
     <div id="card-element">
       <!-- A Stripe Element will be inserted here. -->
     </div>
 
     <!-- Used to display Element errors. -->
-    <div id="card-errors" role="alert"></div>
+    <div id="card-errors" role="alert" class="text-sm text-red-400"></div>
   </div>
 
-  <button>Submit Payment</button>
+  <input type="hidden" name="plan" value="<%= params[:plan] %>">
+  <input type="hidden" name="project" value="<%= params[:project] %>">
+
+  <button>Back <%= number_to_currency(params[:amount]) %> /mo toward <em><%= project.title %></em></button>
 <% end %>

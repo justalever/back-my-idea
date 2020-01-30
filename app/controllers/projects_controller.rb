@@ -22,6 +22,9 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
+        if @project.perks.any? && current_user.can_receive_payments?
+          CreatePerkPlansJob.perform_now(@project)
+        end
         ExpireProjectJob.set(wait_until: @project.expires_at).perform_later(@project)
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render :show, status: :created, location: @project }
@@ -35,6 +38,7 @@ class ProjectsController < ApplicationController
   def update
     respond_to do |format|
       if @project.update(project_params)
+        UpdatePerkPlansJob.perform_now(@project)
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else

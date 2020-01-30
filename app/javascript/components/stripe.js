@@ -1,60 +1,87 @@
-const StripeCharges = {
+class StripeCharges {
+  constructor({ form, key }) {
+    this.form = form;
+    this.key = key;
+    this.stripe = Stripe(this.key)
+  }
+
   initialize() {
     this.mountCard()
-  },
+  }
 
   mountCard() {
-    const stripe = Stripe(document.getElementById('payment-form').dataset.stripeKey);
-    const elements = stripe.elements();
+    const elements = this.stripe.elements();
 
     const style = {
       base: {
-        // Add your base input styles here. For example:
-        fontSize: '16px',
-        color: '#32325d',
+        color: "#32325D",
+        fontWeight: 500,
+        fontSize: "16px",
+        fontSmoothing: "antialiased",
+
+        "::placeholder": {
+          color: "#CFD7DF"
+        },
+        invalid: {
+          color: "#E25950"
+        }
       },
     };
-    // Create an instance of the card Element.
+
     const card = elements.create('card', { style });
-
-    // Add an instance of the card Element into the `card-element` <div>.
-
     if (card) {
-      const form = document.getElementById('payment-form');
       card.mount('#card-element');
-      this.generateToken(card, form);
+      this.generateToken(card);
     }
-  },
+  }
 
-  generateToken(card, form) {
-    // Create a token or display an error when the form is submitted.
-    form.addEventListener('submit', async (event) => {
+  generateToken(card) {
+    let self = this;
+    this.form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
-      const { token, error } = await stripe.createToken(card);
+      const { token, error } = await self.stripe.createToken(card);
 
       if (error) {
-        // Inform the customer that there was an error.
         const errorElement = document.getElementById('card-errors');
         errorElement.textContent = error.message;
       } else {
-        // Send the token to your server.
-        this.tokenHandler(token, form);
+        this.tokenHandler(token);
       }
     });
-  },
+  }
 
-  tokenHandler(token, form) {
-    // Insert the token ID into the form so it gets submitted to the server
+  tokenHandler(token) {
+    let self = this;
     const hiddenInput = document.createElement('input');
     hiddenInput.setAttribute('type', 'hidden');
     hiddenInput.setAttribute('name', 'stripeToken');
     hiddenInput.setAttribute('value', token.id);
-    form.appendChild(hiddenInput);
+    this.form.appendChild(hiddenInput);
 
-    // Submit the form
-    form.submit();
+    ["brand", "last4", "exp_month", "exp_year"].forEach(function (field) {
+      self.addCardField(token, field);
+    });
+    this.form.submit();
+  }
+
+  addCardField(token, field) {
+    let hiddenInput = document.createElement('input');
+    hiddenInput.setAttribute('type', 'hidden');
+    hiddenInput.setAttribute('name', "user[card_" + field + "]");
+    hiddenInput.setAttribute('value', token.card[field]);
+    this.form.appendChild(hiddenInput);
   }
 }
 
-export default StripeCharges;
+// Kick it all off
+document.addEventListener("turbolinks:load", () => {
+  const form = document.querySelector('#payment-form')
+  if (form) {
+    const charge = new StripeCharges({
+      form: form,
+      key: form.dataset.stripeKey
+    });
+    charge.initialize()
+  }
+})

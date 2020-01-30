@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  include Pay::Billable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:stripe_connect]
   has_many :projects, dependent: :destroy

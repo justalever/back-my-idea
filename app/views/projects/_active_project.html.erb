@@ -13,7 +13,7 @@
     </div>
 
     <div class="w-full mb-4 lg:w-1/5 lg:mb-0">
-      <p class="m-0 text-xl font-semibold leading-none">200</p>
+      <p class="m-0 text-xl font-semibold leading-none"></p>
       <p class="text-sm text-gray-500">backers</p>
     </div>
 
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div class="flex flex-wrap items-start justify-between mb-6">
+  <div class="flex flex-wrap items-start justify-between w-full mb-6">
     <div class="w-full lg:w-3/5">
     <% if project.thumbnail.present? %>
       <%= image_tag project.thumbnail, class: "rounded" %>
@@ -35,10 +35,10 @@
         </div>
       </div>
     <% end %>
-    <div class="my-6">
-      <%= render "comments/comments", commentable: project  %>
-      <%= render "comments/form", commentable: project %>
-    </div>
+      <div class="my-6">
+        <%= render "comments/comments", commentable: project  %>
+        <%= render "comments/form", commentable: project %>
+      </div>
     </div>
 
     <div class="w-full mt-6 lg:pl-10 lg:w-2/5 lg:mt-0">
@@ -56,7 +56,12 @@
           <div class="py-2 text-gray-700">
             <%= simple_format perk.description %>
           </div>
-          <%= link_to "Back this idea for #{number_to_currency(perk.amount)} /mo", new_subscription_path(amount: perk.amount, project: project), class: "btn btn-default btn-expanded" %>
+
+          <% if user_signed_in? && perk.project.user_id == current_user.id %>
+            <em class="block text-sm text-center">Sorry, You can't back your own idea</em>
+          <% else %>
+          <%= link_to "Back this idea for #{number_to_currency(perk.amount)} /mo", new_subscription_path(amount: perk.amount, project: project, plan: "#{perk.title.parameterize}-perk_#{perk.id}"), class: "btn btn-default btn-expanded" %>
+          <% end %>
         </div>
       <% end %>
     </div>

@@ -1,4 +1,12 @@
 <div class="max-w-lg m-auto">
-  <h1 class="mb-6 text-3xl font-bold">Create a Project</h1>
-  <%= render 'form', project: @project %>
+ <% if current_user.can_receive_payments? %>
+    <h1 class="mb-6 text-3xl font-bold">Create a Project</h1>
+    <%= render 'form', project: @project %>
+  <% else %>
+  <div class="p-6 bg-white rounded-lg">
+    <h1 class="text-3xl font-bold text-gray-900">Authorize Stripe</h1>
+    <p class="mb-6 text-gray-900">Before you can configure a new project we need you to connect to Stripe</p>
+    <%= stripe_connect_button %>
+  </div>
+  <% end %>
 </div>

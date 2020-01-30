@@ -13,9 +13,4 @@ require("@rails/actiontext")
 
 import "stylesheets/application"
 import "controllers"
-import StripeCharges from "components/stripe";
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  StripeCharges.initialize()
-})
+import "components/stripe";

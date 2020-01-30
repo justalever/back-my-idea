@@ -1,7 +1,13 @@
 <div class="w-1/2 mx-auto">
   <h3 class="mb-2 text-2xl font-bold text-center">You're about to back <em><%= @project.title %> 🎉</em></h3>
 
+  <% if user_signed_in? %>
   <div class="p-6 border rounded">
     <%= render "form", project: @project %>
   </div>
+  <% else %>
+  <div class="p-6 text-center bg-white border rounded">
+    <%= link_to "Sign in to back this idea", new_user_session_path, class: "btn btn-default" %>
+  </div>
+  <% end %>
 </div>

@@ -25,3 +25,96 @@
 .select:focus {
   @apply outline-none bg-white;
 }
+
+// Stripe form
+.stripe-form {
+  @apply bg-white rounded-lg block p-6;
+
+  * {
+    @apply font-sans text-base font-normal;
+  }
+
+  label {
+    @apply text-gray-900;
+  }
+
+  .card-only {
+    @apply block;
+  }
+
+  .StripeElement {
+    @apply border px-3 py-3 rounded-lg;
+  }
+
+  input, button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border-style: none;
+    color: #fff;
+  }
+
+  input:-webkit-autofill {
+    transition: background-color 100000000s;
+    -webkit-animation: 1ms void-animation-out;
+  }
+
+  input {
+    -webkit-animation: 1ms void-animation-out;
+  }
+
+  input::-webkit-input-placeholder {
+    @apply text-gray-400;
+  }
+
+  input::-moz-placeholder {
+    @apply text-gray-400;
+  }
+
+  input:-ms-input-placeholder {
+    @apply text-gray-400;
+  }
+
+  button {
+    @apply bg-indigo-500 rounded mt-4 text-white cursor-pointer w-full block h-10;
+  }
+
+  button:active {
+    @apply bg-indigo-600;
+  }
+
+  .error {
+    svg {
+      .base {
+        fill: #e25950;
+      }
+
+      .glyph {
+        fill: #f6f9fc;
+      }
+    }
+
+    .success {
+      .icon .border {
+        stroke: #ffc7ee;
+      }
+
+      .icon .checkmark {
+        @apply bg-indigo-500;
+      }
+
+      .title {
+        color: #32325d;
+      }
+
+      .message {
+        color: #8898aa;
+      }
+
+      .reset path {
+        @apply bg-indigo-500;
+      }
+    }
+  }
+}
