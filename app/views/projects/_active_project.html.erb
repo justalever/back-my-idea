@@ -60,7 +60,11 @@
           <% if user_signed_in? && perk.project.user_id == current_user.id %>
             <em class="block text-sm text-center">Sorry, You can't back your own idea</em>
           <% else %>
-          <%= link_to "Back this idea for #{number_to_currency(perk.amount)} /mo", new_subscription_path(amount: perk.amount, project: project, plan: "#{perk.title.parameterize}-perk_#{perk.id}"), class: "btn btn-default btn-expanded" %>
+           <% if purchased_perk(perk) %>
+              <p class="text-sm">You're already subscribed to this perk. <%= link_to "Manage your subscriptions in your account settings", edit_user_registration_path, class: "text-blue-500 underline" %>.</p>
+            <% else %>
+             <%= link_to "Back this idea for #{number_to_currency(perk.amount)} /mo",  new_subscription_path(amount: perk.amount, project: project, plan: "#{perk.title.parameterize}-perk_#{perk.id}"), class: "btn btn-default btn-expanded" %>
+            <% end %>
           <% end %>
         </div>
       <% end %>
